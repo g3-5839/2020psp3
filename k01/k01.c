@@ -84,7 +84,7 @@ int BinarySearch(int key, City arrayCity[], int left, int right)
     right = MAX_CITY - 1;
 
     while (left <= right){
-        pos = (right + left) / 2;
+        pos = left + (right - left) / 2;
         if(key == arrayCity[pos].id){ 
             return pos;
         } else if (key > arrayCity[pos].id){
