@@ -106,7 +106,30 @@ int StackIsEmpty(void)
 void DepthFirstSearch(int size, int matrix[size][size], int start)
 {
     //  ここを実装する
+    int visited[size];
+    int i, j, val;
 
+    for(i = 0; i < size; i++){
+        visited[i] = 0;
+    }
+
+    StackInit();
+    StackPush(start);
+
+    while(StackIsEmpty() == FALSE){
+        val=StackPop();
+        if(visited[val] != 1){
+            visited[val] = 1;
+
+            PrintStationName(val);
+
+            for(j = 0; j < MAX_STATIONS; j++){
+                if(matrix[val][j] != 0){
+                    StackPush(j);
+                }
+            }
+        }
+    }
 }
 
 
@@ -172,7 +195,29 @@ int QueueIsEmpty()
 void BreadthFirstSearch(int size, int matrix[size][size], int start)
 {
     //  ここを実装する
+    int visited[size];
+    int i, j, val;
+    
+    for(i = 0; i < size; i++){
+        visited[i]=0;
+    }
+    InitQueue();
+    EnQueue(start);
 
+    while(QueueIsEmpty() == FALSE){
+        val = DeQueue();
+        if(visited[val] != 1){
+            visited[val] = 1;
+
+            PrintStationName(val);
+
+            for(j = 0; j < MAX_STATIONS; j++){
+                if(matrix[val][j] != 0){
+                    EnQueue(j);
+                }
+            }
+        }
+    }
 }
 
 
@@ -191,6 +236,7 @@ int main(void)
     int cost;
 
     DepthFirstSearch(MAX_STATIONS, AdjacencyMatrix, 0);
+    printf("\n");
     BreadthFirstSearch(MAX_STATIONS, AdjacencyMatrix, 0);
 
     cost = SearchGraphByDijkstra(0, 7, MAX_STATIONS, AdjacencyMatrix);
