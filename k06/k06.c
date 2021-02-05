@@ -71,9 +71,27 @@ void DynamicProgLimited(Menu arrayItem[], int items, int nap_size)
     int nap_value[items+1][nap_size + 1];   //  動的計画法で作成するテーブル
     int history[items+1][nap_size + 1];     //  履歴を保存するテーブル(選択したメニューを探すときに使用)
 
-    //　ここを実装する
+    //　ここを実装する 
+    int i, j, k;
+    for(i=0; i<=items; i++){
+        for(j=0; j<=nap_size; j++){
+            nap_value[i][j] = 0;
+        }
+    }
 
-
+    for(i=1; i<=items; i++){
+        for(k=1; k<arrayItem[i-1].price; k++){
+            nap_value[i][k] = nap_value[i-1][k];
+        }
+        for(j=arrayItem[i-1].price; j<=nap_size; j++){
+            if(nap_value[i-1][j] > nap_value[i-1][j-arrayItem[i-1].price]+arrayItem[i-1].calorie){
+                nap_value[i][j] = nap_value[i-1][j];
+            }else{
+                nap_value[i][j] = nap_value[i-1][j-arrayItem[i-1].price]+arrayItem[i-1].calorie;
+            }
+        }
+    }
+    printf("最大取得可能カロリーは%dkcal\n", nap_value[items][nap_size]);
 }
 
 
